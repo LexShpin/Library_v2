@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new visitor</title>
+</head>
+<body>
+    <h1>Add new visitor</h1>
+    <form th:method="POST" th:action="@{/people}" th:object="${person}">
+        <label for="name">Visitor's name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+        <br />
+
+        <label for="yearOfBirth">Visitor's year of birth:</label>
+        <input type="text" id="yearOfBirth" th:field="*{yearOfBirth}" />
+        <br />
+
+        <input type="submit" value="Add visitor" />
+    </form>
+</body>
+</html>
