@@ -5,10 +5,10 @@
     <title>Library Visitors</title>
 </head>
 <body>
+    <h1>All library's visitors</h1>
     <div th:each="person: ${people}">
         <a th:href="@{people/{id}(id=${person.getId()})}" th:text="${person.getName()}">person</a>
     </div>
-
     <br/>
 
     <a href="/people/new">Add new visitor</a>
