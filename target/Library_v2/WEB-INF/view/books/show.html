@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Book</title>
 </head>
 <body>
-
+    <p th:text="${book.getTitle()}"></p>
+    <p th:text="${book.getAuthor()}"></p>
+    <p th:text="${book.getYear()}"></p>
 </body>
 </html>
