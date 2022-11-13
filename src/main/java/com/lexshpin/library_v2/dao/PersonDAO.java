@@ -29,4 +29,8 @@ public class PersonDAO {
     public void add(Person person) {
         jdbcTemplate.update("INSERT INTO Person(name, yearofbirth) VALUES(?, ?)", person.getName(), person.getYearOfBirth());
     }
+
+    public void update(int id, Person person) {
+        jdbcTemplate.update("UPDATE Person SET name=?, yearofbirth=? WHERE id=?", person.getName(), person.getYearOfBirth(), person.getId());
+    }
 }
