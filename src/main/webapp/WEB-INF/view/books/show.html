@@ -11,13 +11,18 @@
     <br />
 
     <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}" th:object="${book}">
-        <p th:text="${book.isAssigned()}"></p>
-        <p th:text="${book.isAssigned()} ? 'This book is assigned to: ${person.getName()}' : 'This book is not assigned to anybody'"></p>
-        <select th:if="${book.isAssigned() == false}" th:object="${person}" th:field="*{id}">
+        <div th:if="${book.getAssignedTo().isPresent()}">
+            <span>This book is assigned to: </span>
+            <span th:each="person: ${people}" th:if="${person.getId() == book.getAssignedTo().get()}" th:value="${person.getId()}" th:text="${person.getName()}"></span>
+        </div>
+        <div th:unless="${book.getAssignedTo().isPresent()}">
+            <p>This book is not assigned</p>
+        </div>
+        <select th:if="${!book.getAssignedTo().isPresent()}" th:object="${person}" th:field="*{id}">
             <option th:each="person: ${people}" th:value="${person.getId()}" th:text="${person.getName()}"></option>
         </select>
 
-        <input type="submit" th:value="${book.isAssigned()} ? 'Free the book' : 'Assign the book'" />
+        <input type="submit" th:value="${book.getAssignedTo().isPresent()} ? 'Free the book' : 'Assign the book'" />
     </form>
 
     <br />

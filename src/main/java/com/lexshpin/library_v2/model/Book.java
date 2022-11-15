@@ -1,12 +1,14 @@
 package com.lexshpin.library_v2.model;
 
+import java.util.Optional;
+
 public class Book {
 
     private int id;
     private String title;
     private String author;
     private int year;
-    private boolean isAssigned;
+    private Optional<Integer> assignedTo;
 
     public Book(int id, String title, String author, int year) {
         this.id = id;
@@ -49,11 +51,11 @@ public class Book {
         this.year = year;
     }
 
-    public boolean isAssigned() {
-        return isAssigned;
+    public Optional<Integer> getAssignedTo() {
+        return assignedTo;
     }
 
-    public void setAssigned(boolean assigned) {
-        isAssigned = assigned;
+    public void setAssignedTo(Optional<Integer> assignedTo) {
+        this.assignedTo = assignedTo;
     }
 }

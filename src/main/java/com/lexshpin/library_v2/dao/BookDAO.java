@@ -28,7 +28,7 @@ public class BookDAO {
     }
 
     public void add(Book book) {
-        jdbcTemplate.update("INSERT INTO Book(title, author, year) VALUES(?, ?, ?)", book.getTitle(), book.getAuthor(), book.getYear());
+        jdbcTemplate.update("INSERT INTO Book(title, author, year, assigned_to) VALUES(?, ?, ?, ?)", book.getTitle(), book.getAuthor(), book.getYear(), book.getAssignedTo());
     }
 
     public void update(int id, Book book) {
@@ -40,15 +40,10 @@ public class BookDAO {
     }
 
     public void assignBook(int bookId, int personId) {
-        jdbcTemplate.update("UPDATE Book SET given_to=? WHERE id=?", personId, bookId);
-        Book book = show(bookId);
-        book.setAssigned(true);
-        System.out.println("Book " + book.getTitle() + " is now assigned");
+        jdbcTemplate.update("UPDATE Book SET assigned_to=? WHERE id=?", personId, bookId);
     }
 
     public void freeBook(int id) {
-        jdbcTemplate.update("UPDATE Book SET given_to=null WHERE id=?", id);
-        Book book = show(id);
-        book.setAssigned(false);
+        jdbcTemplate.update("UPDATE Book SET assigned_to=0 WHERE id=?", id);
     }
 }
