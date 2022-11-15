@@ -1,7 +1,9 @@
 package com.lexshpin.library_v2.controller;
 
 import com.lexshpin.library_v2.dao.BookDAO;
+import com.lexshpin.library_v2.dao.PersonDAO;
 import com.lexshpin.library_v2.model.Book;
+import com.lexshpin.library_v2.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
 
     private BookDAO bookDAO;
+    private PersonDAO personDAO;
 
     @Autowired
-    public BookController(BookDAO bookDAO) {
+    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
         this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
     }
 
     @GetMapping()
@@ -26,8 +30,9 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String show(Model model, @PathVariable("id") int id) {
+    public String show(Model model, @PathVariable("id") int id, @ModelAttribute("person") Person person) {
         model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("people", personDAO.index());
 
         return "books/show";
     }
@@ -61,6 +66,21 @@ public class BookController {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         bookDAO.delete(id);
+
+        return "redirect:/books";
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assignBook(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
+        model.addAttribute("book", bookDAO.show(id));
+        bookDAO.assignBook(id, person.getId());
+
+        return "redirect:/books";
+    }
+
+    @PostMapping("/{id}/free")
+    public String freeBook(@PathVariable("id") int id) {
+        bookDAO.freeBook(id);
 
         return "redirect:/books";
     }

@@ -10,6 +10,19 @@
     <p th:text="${book.getYear()}"></p>
     <br />
 
+    <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}" th:object="${book}">
+        <p th:text="${book.isAssigned()}"></p>
+        <p th:text="${book.isAssigned()} ? 'This book is assigned to: ${person.getName()}' : 'This book is not assigned to anybody'"></p>
+        <select th:if="${book.isAssigned() == false}" th:object="${person}" th:field="*{id}">
+            <option th:each="person: ${people}" th:value="${person.getId()}" th:text="${person.getName()}"></option>
+        </select>
+
+        <input type="submit" th:value="${book.isAssigned()} ? 'Free the book' : 'Assign the book'" />
+    </form>
+
+    <br />
+    <hr />
+
     <a th:href="@{/books/{id}/edit(id=${book.getId()})}">EDIT</a>
     <br />
     <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">

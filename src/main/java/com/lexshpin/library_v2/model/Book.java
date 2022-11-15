@@ -6,6 +6,7 @@ public class Book {
     private String title;
     private String author;
     private int year;
+    private boolean isAssigned;
 
     public Book(int id, String title, String author, int year) {
         this.id = id;
@@ -46,5 +47,13 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public boolean isAssigned() {
+        return isAssigned;
+    }
+
+    public void setAssigned(boolean assigned) {
+        isAssigned = assigned;
     }
 }

@@ -1,6 +1,7 @@
 package com.lexshpin.library_v2.dao;
 
 import com.lexshpin.library_v2.model.Book;
+import com.lexshpin.library_v2.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -36,5 +37,18 @@ public class BookDAO {
 
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM Book WHERE id=?", id);
+    }
+
+    public void assignBook(int bookId, int personId) {
+        jdbcTemplate.update("UPDATE Book SET given_to=? WHERE id=?", personId, bookId);
+        Book book = show(bookId);
+        book.setAssigned(true);
+        System.out.println("Book " + book.getTitle() + " is now assigned");
+    }
+
+    public void freeBook(int id) {
+        jdbcTemplate.update("UPDATE Book SET given_to=null WHERE id=?", id);
+        Book book = show(id);
+        book.setAssigned(false);
     }
 }
