@@ -1,5 +1,6 @@
 package com.lexshpin.library_v2.dao;
 
+import com.lexshpin.library_v2.model.Book;
 import com.lexshpin.library_v2.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -36,5 +37,9 @@ public class PersonDAO {
 
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM Person WHERE id=?", id);
+    }
+    
+    public List<Book> getBooksByPerson(int id) {
+        return jdbcTemplate.query("SELECT * FROM Book WHERE assigned_to=?", new Object[]{id}, new BeanPropertyRowMapper<>(Book.class));
     }
 }

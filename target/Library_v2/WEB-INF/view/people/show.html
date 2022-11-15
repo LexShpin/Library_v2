@@ -8,14 +8,18 @@
     <p th:text="${person.getName()}"></p>
     <p th:text="${person.getYearOfBirth}"></p>
 
-    <br />
-
-    <h4>Books:</h4>
-    <div th:each="book: ${books}" th:if="${book.getAssignedTo().isPresent() && book.getAssignedTo().get() == person.getId()}">
-        <span th:text="${book.getTitle()}" th:value="${book.getId()}"></span>
-        <span th:text="${book.getAuthor()}"></span>
-        <span th:text="${book.getYear()}"></span>
+    <div th:if="${!books.isEmpty()}">
+        <h3>Books:</h3>
+        <table th:each="book: ${books}">
+            <tr th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></tr>
+        </table>
     </div>
+
+    <div th:if="${books.isEmpty()}">
+        <p>This person hasn't taken any books yet</p>
+    </div>
+
+    <hr />
 
     <a th:href="@{/people/{id}/edit(id=${person.getId()})}">EDIT</a>
     <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
