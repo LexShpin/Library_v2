@@ -10,19 +10,24 @@
     <p th:text="${book.getYear()}"></p>
     <br />
 
-    <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}" th:object="${book}">
-        <div th:if="${book.getAssignedTo().isPresent()}">
+    <form th:if="${book.getAssignedTo().isPresent()}" th:method="POST" th:action="@{/books/{id}/free(id=${book.getId()})}" th:object="${book}">
+        <div>
             <span>This book is assigned to: </span>
             <span th:each="person: ${people}" th:if="${person.getId() == book.getAssignedTo().get()}" th:value="${person.getId()}" th:text="${person.getName()}"></span>
         </div>
-        <div th:unless="${book.getAssignedTo().isPresent()}">
+
+        <input type="submit" th:value="Free" />
+    </form>
+
+    <form th:unless="${book.getAssignedTo().isPresent()}" th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}" th:object="${book}">
+        <div>
             <p>This book is not assigned</p>
         </div>
-        <select th:if="${!book.getAssignedTo().isPresent()}" th:object="${person}" th:field="*{id}">
+        <select th:object="${person}" th:field="*{id}">
             <option th:each="person: ${people}" th:value="${person.getId()}" th:text="${person.getName()}"></option>
         </select>
 
-        <input type="submit" th:value="${book.getAssignedTo().isPresent()} ? 'Free the book' : 'Assign the book'" />
+        <input type="submit" th:value="Assign" />
     </form>
 
     <br />
