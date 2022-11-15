@@ -1,6 +1,8 @@
 package com.lexshpin.library_v2.controller;
 
+import com.lexshpin.library_v2.dao.BookDAO;
 import com.lexshpin.library_v2.dao.PersonDAO;
+import com.lexshpin.library_v2.model.Book;
 import com.lexshpin.library_v2.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class PersonController {
 
     private PersonDAO personDAO;
+    private BookDAO bookDAO;
 
     @Autowired
-    public PersonController(PersonDAO personDAO) {
+    public PersonController(PersonDAO personDAO, BookDAO bookDAO) {
         this.personDAO = personDAO;
+        this.bookDAO = bookDAO;
     }
 
     @GetMapping()
@@ -28,6 +32,7 @@ public class PersonController {
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id) {
         model.addAttribute("person", personDAO.show(id));
+        model.addAttribute("books", bookDAO.index());
 
         return "people/show";
     }
