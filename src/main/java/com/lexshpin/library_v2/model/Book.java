@@ -66,7 +66,7 @@ public class Book {
     }
 
     public Optional getAssignedTo() {
-        return Optional.of(assignedTo);
+        return Optional.ofNullable(assignedTo);
     }
 
     public void setAssignedTo(Integer assignedTo) {
