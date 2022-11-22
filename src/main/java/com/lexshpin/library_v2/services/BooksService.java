@@ -28,6 +28,8 @@ public class BooksService {
 
     public Page<Book> findAll(Pageable pageRequest) {return booksRepository.findAll(pageRequest);}
 
+    public List<Book> findByTitleStartingWith(String startingWith) {return booksRepository.findByTitleStartingWith(startingWith);}
+
     public Book findOne(int id) {
         Optional<Book> book = booksRepository.findById(id);
         return book.orElse(null);
